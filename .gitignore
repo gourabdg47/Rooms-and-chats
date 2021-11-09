@@ -1,3 +1,5 @@
+~/.config/
+test.pewpew
 *.sqlite3
 *.log
 *.logs
