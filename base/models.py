@@ -14,7 +14,8 @@ class Room(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
-    # participants =   # Store all the users
+    participants = models.ManyToManyField(User, 
+                   related_name="participants", blank=True)  # Store all the users in the rooms page , blank = true so we can submit without checking
     updated = models.DateTimeField(auto_now=True)            # takes time stamp everytime it's updated
     created = models.DateTimeField(auto_now_add=True)        # takes timestanm onetime it's initiated
 
@@ -31,6 +32,10 @@ class Message(models.Model):
     body = models.TextField()                                # message body from the users
     updated = models.DateTimeField(auto_now=True)            # takes time stamp everytime it's updated
     created = models.DateTimeField(auto_now_add=True)        # takes timestanm onetime it's initiated
-
+    
+    class Meta:
+        ordering = ['-updated', '-created']
+        
     def __str__(self):
         return self.body[0:50]                               # sending the body of the message when this class is called from the admin pannel
+    
